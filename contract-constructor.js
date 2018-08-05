@@ -1,16 +1,16 @@
 const upd = function() {
-  this.updateCode()
-}
+  this.updateCode();
+};
 
 var app = new Vue({
-  el: '#contract-constructor',
+  el: "#contract-constructor",
   data: {
     name: null,
     symbol: null,
     decimals: null,
 
     rate: null,
-    wallet: '',
+    wallet: "",
     timed: false,
     startDate: null,
     endDate: null,
@@ -24,7 +24,7 @@ var app = new Vue({
     whitelisted: false,
 
     supply: null,
-    code: 'Loading...'
+    code: "Loading..."
   },
   created: upd,
   watch: {
@@ -43,64 +43,64 @@ var app = new Vue({
     endRate: upd,
     capped: upd,
     cap: upd,
-    whitelisted: upd,
+    whitelisted: upd
   },
   methods: {
     updateCode: function() {
-      const contructConstructor =
-        new ContractConstructor(
-          this.name,
-          this.symbol,
-          this.decimals,
-          this.rate,
-          this.wallet,
-          this.getContractOptions(),
-          this.getContractParams());
-      contructConstructor.getCodeText()
-        .then(res => this.code = res)
+      const contructConstructor = new ContractConstructor(
+        this.name,
+        this.symbol,
+        this.decimals,
+        this.rate,
+        this.wallet,
+        this.getContractOptions(),
+        this.getContractParams()
+      );
+      contructConstructor.getCodeText().then(res => (this.code = res));
     },
     download: function() {
-      const contructConstructor =
-        new ContractConstructor(
-          this.name,
-          this.symbol,
-          this.decimals,
-          this.rate,
-          this.wallet,
-          this.getContractOptions(),
-          this.getContractParams());
-      contructConstructor.getCode()
-        .then(res => saveAs(res, `${this.symbol || 'MYT'}Code.zip`))
+      const contructConstructor = new ContractConstructor(
+        this.name,
+        this.symbol,
+        this.decimals,
+        this.rate,
+        this.wallet,
+        this.getContractOptions(),
+        this.getContractParams()
+      );
+      contructConstructor
+        .getCode()
+        .then(res => saveAs(res, `${this.symbol || "MYT"}Code.zip`));
     },
     getContractOptions: function() {
-      const options = []
+      const options = [];
       if (this.timed) {
-        options.push(ContractOptions.Timed)
-        if (this.refundable) options.push(ContractOptions.Refundable)
-        if (this.increasingPrice) options.push(ContractOptions.IncreasingPrice)
+        options.push(ContractOptions.Timed);
+        if (this.refundable) options.push(ContractOptions.Refundable);
+        if (this.increasingPrice) options.push(ContractOptions.IncreasingPrice);
       }
       if (this.capped) {
-        options.push(ContractOptions.Capped)
+        options.push(ContractOptions.Capped);
       }
       if (this.whitelisted) {
-        options.push(ContractOptions.Whitelisted)
+        options.push(ContractOptions.Whitelisted);
       }
-      return options
+      return options;
     },
     getContractParams: function() {
-      const params = []
+      const params = [];
       if (this.timed) {
-        params.push([this.startDate, this.endDate])
-        if (this.refundable) params.push([this.goal])
-        if (this.increasingPrice) params.push([this.startRate, this.endRate])
+        params.push([this.startDate, this.endDate]);
+        if (this.refundable) params.push([this.goal]);
+        if (this.increasingPrice) params.push([this.startRate, this.endRate]);
       }
       if (this.capped) {
-        params.push([this.cap])
+        params.push([this.cap]);
       }
       if (this.whitelisted) {
-        params.push([])
+        params.push([]);
       }
-      return params
+      return params;
     }
-  },
-})
+  }
+});
